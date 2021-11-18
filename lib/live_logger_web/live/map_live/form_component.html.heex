@@ -17,6 +17,7 @@
     <%= text_input f, :description %>
     <%= error_tag f, :description %>
   
+    <%= hidden_input f, :user_id %>
     <div>
       <%= submit "Save", phx_disable_with: "Saving..." %>
     </div>

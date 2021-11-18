@@ -12,6 +12,7 @@
 <table>
   <thead>
     <tr>
+      <th>User</th>
       <th>Name</th>
       <th>Description</th>
 
@@ -21,9 +22,9 @@
   <tbody id="maps">
     <%= for map <- @maps do %>
       <tr id={"map-#{map.id}"}>
+        <td><%= map.user.email %></td>
         <td><%= map.name %></td>
         <td><%= map.description %></td>
-
         <td>
           <span><%= live_redirect "Show", to: Routes.map_show_path(@socket, :show, map) %></span>
           <span><%= live_patch "Edit", to: Routes.map_index_path(@socket, :edit, map) %></span>
