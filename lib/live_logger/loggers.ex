@@ -18,7 +18,9 @@ defmodule LiveLogger.Loggers do
 
   """
   def list_maps do
-    Repo.all(Map)
+    Map
+    |> preload(:user)
+    |> Repo.all()
   end
 
   @doc """
