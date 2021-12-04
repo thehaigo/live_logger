@@ -7,6 +7,7 @@ defmodule LiveLogger.Loggers.Map do
     field :name, :string
 
     belongs_to :user, LiveLogger.Accounts.User
+    has_many :points, LiveLogger.Loggers.Point
     timestamps()
   end
 
