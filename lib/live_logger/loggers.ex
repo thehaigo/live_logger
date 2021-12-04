@@ -7,6 +7,7 @@ defmodule LiveLogger.Loggers do
   alias LiveLogger.Repo
 
   alias LiveLogger.Loggers.Map
+  alias LiveLogger.Loggers.Point
 
   @doc """
   Returns the list of maps.
@@ -39,6 +40,11 @@ defmodule LiveLogger.Loggers do
   """
   def get_map!(id), do: Repo.get!(Map, id)
 
+  def get_map_with_points!(id) do
+    Map
+    |> preload(:points)
+    |> Repo.get!(id)
+  end
   @doc """
   Creates a map.
 
@@ -102,5 +108,17 @@ defmodule LiveLogger.Loggers do
   """
   def change_map(%Map{} = map, attrs \\ %{}) do
     Map.changeset(map, attrs)
+  end
+
+  def list_points(map_id) do
+    Point
+    |> where([p], p.map_id == ^map_id)
+    |> Repo.all
+  end
+
+  def create_point(attrs \\ %{}) do
+    %Point{}
+    |> Point.changeset(attrs)
+    |> Repo.insert
   end
 end
