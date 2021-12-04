@@ -24,9 +24,12 @@ defmodule LiveLoggerWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", LiveLoggerWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", LiveLoggerWeb do
+    pipe_through :api
+
+    resources "/maps", MapController, except: [:new, :edit]
+    resources  "/points", PointController, only: [:create]
+  end
 
   # Enables LiveDashboard only for development
   #
