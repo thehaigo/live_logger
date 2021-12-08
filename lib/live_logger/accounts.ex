@@ -212,6 +212,12 @@ defmodule LiveLogger.Accounts do
     end
   end
 
+  def generate_passcode(%User{} = user) do
+    user
+    |> User.passcode_changeset()
+    |> Repo.update()
+  end
+
   ## Session
 
   @doc """

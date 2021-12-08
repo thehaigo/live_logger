@@ -1,5 +1,16 @@
 <h1>Settings</h1>
 
+<h3>Generate Passcode</h3>
+<%= link "Generate Passcode", 
+          to: Routes.user_settings_path(@conn, :generate_passcode), 
+          method: :post, 
+          class: "button is-info" 
+%>
+
+<%= if @conn.assigns.current_user.passcode do %>
+  <p><%= "passcode:" <> @conn.assigns.current_user.passcode %></p>
+<% end %>
+
 <h3>Change email</h3>
 
 <.form let={f} for={@email_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_email">

@@ -104,6 +104,16 @@ defmodule LiveLogger.Accounts.User do
     |> validate_password(opts)
   end
 
+  def passcode_changeset(user) do
+    user
+    |> cast(%{}, [:passcode])
+    |> put_change(
+      :passcode,
+      Enum.random(100_000_000_000_000..999_999_999_999_999)
+      |> to_string()
+    )
+  end
+
   @doc """
   Confirms the account by setting `confirmed_at`.
   """
