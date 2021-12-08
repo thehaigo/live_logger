@@ -13,6 +13,15 @@ defmodule LiveLoggerWeb.UserApiSessionController do
     end
   end
 
+  def create(conn, %{"passcode" => passcode}) do
+    with user when is_struct(user) <- Accounts.get_user_by_passcode(passcode),
+         token <- user |> Accounts.generate_user_session_token() |> Base.encode64() do
+      render(conn, "token.json", token: token)
+    else
+      _error -> {:error, :unauthorized}
+    end
+  end
+
   def refresh_token(%{assigns: %{current_user: user, token: old_token}} = conn, _params) do
     Accounts.delete_session_token(old_token)
 

@@ -44,6 +44,10 @@ defmodule LiveLogger.Accounts do
     if User.valid_password?(user, password), do: user
   end
 
+  def get_user_by_passcode(passcode) when is_binary(passcode) do
+    Repo.get_by(User, passcode: passcode)
+  end
+
   @doc """
   Gets a single user.
 
