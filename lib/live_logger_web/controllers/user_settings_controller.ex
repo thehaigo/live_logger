@@ -64,20 +64,6 @@ defmodule LiveLoggerWeb.UserSettingsController do
     end
   end
 
-  def gen_passcode(conn, _params) do
-    case Accounts.generate_passcode(conn.assigns.current_user) do
-      {:ok, _} ->
-        conn
-        |> put_flash(:info, "Passcode generate successfully.")
-        |> redirect(to: Routes.user_settings_path(conn, :edit))
-
-      {:error, _} ->
-        conn
-        |> put_flash(:error, "Passcode generate failed!")
-        |> redirect(to: Routes.user_settings_path(conn, :edit))
-    end
-  end
-
   defp assign_email_and_password_changesets(conn, _opts) do
     user = conn.assigns.current_user
 

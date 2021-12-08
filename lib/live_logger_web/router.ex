@@ -87,7 +87,6 @@ defmodule LiveLoggerWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
-    post "/users/settings/gen_passcode", UserSettingsController, :gen_passcode
 
     live "/maps", MapLive.Index, :index
     live "/maps/new", MapLive.Index, :new
