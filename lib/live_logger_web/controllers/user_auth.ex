@@ -140,6 +140,21 @@ defmodule LiveLoggerWeb.UserAuth do
     end
   end
 
+  def require_authenticated_token(conn, _opts) do
+    with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
+         {:ok, binary_token} <- Base.decode64(token),
+         user when is_struct(user) <- Accounts.get_user_by_session_token(binary_token) do
+      conn
+      |> assign(:current_user, user)
+      |> assign(:token, binary_token)
+    else
+      _error ->
+        conn
+        |> LiveLoggerWeb.FallbackController.call({:error, :unauthorized})
+        |> halt()
+    end
+  end
+
   defp maybe_store_return_to(%{method: "GET"} = conn) do
     put_session(conn, :user_return_to, current_path(conn))
   end

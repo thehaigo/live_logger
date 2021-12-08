@@ -27,8 +27,15 @@ defmodule LiveLoggerWeb.Router do
   scope "/api", LiveLoggerWeb do
     pipe_through :api
 
+    post "/signin", UserApiSessionController, :create
+  end
+
+  scope "/api", LiveLoggerWeb do
+    pipe_through [:api, :require_authenticated_token]
+
     resources "/maps", MapController, except: [:new, :edit]
-    resources  "/points", PointController, only: [:create]
+    resources "/points", PointController, only: [:create]
+    post "/refresh_token", UserApiSessionController, :refresh_token
   end
 
   # Enables LiveDashboard only for development
@@ -80,6 +87,7 @@ defmodule LiveLoggerWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+    post "/users/settings/gen_passcode", UserSettingsController, :gen_passcode
 
     live "/maps", MapLive.Index, :index
     live "/maps/new", MapLive.Index, :new
