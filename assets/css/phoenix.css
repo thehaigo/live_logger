@@ -24,6 +24,11 @@ pre{padding: 1em;}
   position: relative;
   width: 100%
 }
+
+#map{
+  height: 600px
+}
+
 select {
   width: auto;
 }
