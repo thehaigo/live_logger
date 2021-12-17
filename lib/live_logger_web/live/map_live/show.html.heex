@@ -1,31 +1,31 @@
-<h1>Show Map</h1>
+<div class="columns">
+  <div class="column is-2 content">
+    <h1>Show Map</h1>
+    <span><%= live_patch "Edit", to: Routes.map_show_path(@socket, :edit, @map), class: "button is-info" %></span>
+    <span><%= live_redirect "Back", to: Routes.map_index_path(@socket, :index), class: "button" %></span>
+    <ul>
+      <li>
+        <strong>Name:</strong>
+        <%= @map.name %>
+      </li>
+      <li>
+        <strong>Description:</strong>
+        <%= @map.description %>
+      </li>
+    </ul>    
+  </div>
+  <div class="column is-10">
+    <%= if @live_action in [:edit] do %>
+      <%= live_modal LiveLoggerWeb.MapLive.FormComponent,
+        id: @map.id,
+        title: @page_title,
+        action: @live_action,
+        map: @map,
+        return_to: Routes.map_show_path(@socket, :show, @map) %>
+    <% end %>
 
-<%= if @live_action in [:edit] do %>
-  <%= live_modal LiveLoggerWeb.MapLive.FormComponent,
-    id: @map.id,
-    title: @page_title,
-    action: @live_action,
-    map: @map,
-    return_to: Routes.map_show_path(@socket, :show, @map) %>
-<% end %>
-
-<ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @map.name %>
-  </li>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @map.description %>
-  </li>
-
-</ul>
-
-<div id="googleMap" phx-update="ignore" phx-hook="Map">
-  <div id="map"></div>
+    <div id="googleMap" phx-update="ignore" phx-hook="Map">
+      <div id="map"></div>
+    </div>
+  </div>
 </div>
-
-<span><%= live_patch "Edit", to: Routes.map_show_path(@socket, :edit, @map), class: "button" %></span> |
-<span><%= live_redirect "Back", to: Routes.map_index_path(@socket, :index) %></span>
